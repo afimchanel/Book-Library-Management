@@ -1,0 +1,1 @@
+export { CoverImageUpload } from './CoverImageUpload';
