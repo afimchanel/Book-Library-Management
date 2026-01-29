@@ -2,9 +2,6 @@
 
 A full-stack book library management application built with NestJS and React.
 
-## 🎯 Challenge Requirements
-
-This project was built as a coding challenge with a **3-4 hour time limit**.
 
 ### User Stories Implemented ✅
 
