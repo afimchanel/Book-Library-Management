@@ -11,7 +11,6 @@ import {
   UploadedFile,
   ParseUUIDPipe,
   UseGuards,
-  Request,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import {
@@ -31,8 +30,13 @@ import { CreateBookDto } from './dto/create-book.dto';
 import { UpdateBookDto } from './dto/update-book.dto';
 import { SearchBookDto } from './dto/search-book.dto';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
-import { ApiCreatedResponse, ApiReadResponses } from 'src/common/decorators/api-responses.decorator';
+import {
+  ApiCreatedResponse,
+  ApiReadResponses,
+} from 'src/common/decorators/api-responses.decorator';
+import { CurrentUser } from 'src/common/decorators/current-user.decorator';
 import { ApiResponseExamples } from 'src/common/examples/api-response.examples';
+import { AuthenticatedUser } from 'src/auth/auth.interface';
 import { BookDetailDtoResponse, BookListItemDtoResponse } from './dto/book.dto';
 import { BorrowRecordDetailDtoResponse } from './dto/borrow-record.dto';
 
@@ -101,8 +105,8 @@ export class BooksController {
     description: 'List of borrowed books retrieved successfully',
     type: BorrowRecordDetailDtoResponse,
   })
-  async getUserBorrowedBooks(@Request() req) {
-    return await this.booksService.getUserBorrowedBooks(req.user.id);
+  async getUserBorrowedBooks(@CurrentUser() user: AuthenticatedUser) {
+    return await this.booksService.getUserBorrowedBooks(user.id);
   }
 
   @Get('user/history')
@@ -111,8 +115,8 @@ export class BooksController {
     description: 'Borrow history retrieved successfully',
     type: BorrowRecordDetailDtoResponse,
   })
-  async getUserBorrowHistory(@Request() req) {
-    return await this.booksService.getUserBorrowHistory(req.user.id);
+  async getUserBorrowHistory(@CurrentUser() user: AuthenticatedUser) {
+    return await this.booksService.getUserBorrowHistory(user.id);
   }
 
   @Get(':id')
@@ -209,8 +213,11 @@ export class BooksController {
       },
     },
   })
-  async borrowBook(@Param('id', ParseUUIDPipe) id: string, @Request() req) {
-    return await this.booksService.borrowBook(id, req.user.id);
+  async borrowBook(
+    @Param('id', ParseUUIDPipe) id: string,
+    @CurrentUser() user: AuthenticatedUser,
+  ) {
+    return await this.booksService.borrowBook(id, user.id);
   }
 
   @Post(':id/return')
@@ -220,7 +227,10 @@ export class BooksController {
     description: 'Book returned successfully',
     type: BorrowRecordDetailDtoResponse,
   })
-  async returnBook(@Param('id', ParseUUIDPipe) id: string, @Request() req) {
-    return await this.booksService.returnBook(id, req.user.id);
+  async returnBook(
+    @Param('id', ParseUUIDPipe) id: string,
+    @CurrentUser() user: AuthenticatedUser,
+  ) {
+    return await this.booksService.returnBook(id, user.id);
   }
 }

@@ -3,7 +3,7 @@ import { JwtService } from '@nestjs/jwt';
 import { UsersService } from '../users/users.service';
 
 import { UserEntity } from '../database/entities';
-import { JwtPayload } from './auth.interface';
+import { JwtPayload, AuthenticatedUser } from './auth.interface';
 import {
   AuthDtoResponse,
   LoginDto,
@@ -72,12 +72,20 @@ export class AuthService {
     };
   }
 
-  async validateUser(payload: JwtPayload): Promise<UserEntity> {
+  async validateUser(payload: JwtPayload): Promise<AuthenticatedUser> {
     const user = await this.usersService.findById(payload.sub);
     if (!user?.id || !user.isActive) {
       throw new UnauthorizedException('User not found or inactive');
     }
-    return user;
+    
+    // Return only necessary fields (not the full entity)
+    return {
+      id: user.id,
+      username: user.username,
+      email: user.email,
+      role: user.role,
+      isActive: user.isActive,
+    };
   }
 
   generateAuthResponse(

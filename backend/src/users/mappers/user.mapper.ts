@@ -12,8 +12,8 @@ export function toUserProfileDto(user: UserEntity): UserProfileDto {
 
 export function toUserPublicDto(user: UserEntity): UserPublicDto {
   return {
-    username: user.username,
-    fullName: user.fullName,
+    username: user?.username,
+    fullName: user?.fullName,
   };
 }
 
