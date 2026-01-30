@@ -1,25 +1,22 @@
-import { useParams, Link, useNavigate } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import { ArrowLeft, Edit, Trash2, BookMarked, Loader2, BookOpen } from 'lucide-react';
-import { useBook, useDeleteBook, useBorrowBook } from '../hooks';
+import { useBookDetailPage } from '../hooks';
 import { useAuthStore } from '@/stores/auth.store';
 import { cn } from '@/lib/utils';
 
 export function BookDetailPage() {
   const { id } = useParams<{ id: string }>();
-  const navigate = useNavigate();
   const { user } = useAuthStore();
 
-  const { data: book, isLoading, error } = useBook(id || '');
-  const { deleteBook, isDeleting } = useDeleteBook();
-  const { borrowBook, isBorrowing } = useBorrowBook();
-
-  const handleDelete = () => {
-    if (window.confirm('Are you sure you want to delete this book?')) {
-      deleteBook(id || '', {
-        onSuccess: () => navigate('/books'),
-      });
-    }
-  };
+  const {
+    book,
+    isLoading,
+    error,
+    handleDelete,
+    handleBorrow,
+    isDeleting,
+    isBorrowing,
+  } = useBookDetailPage(id || '');
 
   if (isLoading) {
     return (
@@ -129,7 +126,7 @@ export function BookDetailPage() {
               <div className="flex flex-wrap gap-3 pt-4 border-t">
                 {user && book.availableQuantity > 0 && (
                   <button
-                    onClick={() => borrowBook(book.id)}
+                    onClick={handleBorrow}
                     disabled={isBorrowing}
                     className="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50"
                   >

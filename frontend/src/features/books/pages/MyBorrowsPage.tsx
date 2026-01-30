@@ -1,32 +1,20 @@
 import { Link } from 'react-router-dom';
 import { BookMarked, Loader2, RotateCcw, Calendar, AlertTriangle } from 'lucide-react';
-import { useUserBorrowedBooks } from '../hooks';
-import { useBorrowBook } from '../hooks';
+import { useMyBorrowsPage } from '../hooks';
 import { cn } from '@/lib';
 import type { BorrowRecord } from '@/types';
 
 export function MyBorrowsPage() {
-  const { data: borrowRecords, isLoading, error } = useUserBorrowedBooks();
-  const { returnBook, isReturning } = useBorrowBook();
-
-  const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'short',
-      day: 'numeric',
-    });
-  };
-
-  const isOverdue = (dueDate: string) => {
-    return new Date(dueDate) < new Date();
-  };
-
-  const getDaysRemaining = (dueDate: string) => {
-    const due = new Date(dueDate);
-    const now = new Date();
-    const diff = Math.ceil((due.getTime() - now.getTime()) / (1000 * 60 * 60 * 24));
-    return diff;
-  };
+  const {
+    borrowRecords,
+    isLoading,
+    error,
+    handleReturn,
+    isReturning,
+    formatDate,
+    isOverdue,
+    getDaysRemaining,
+  } = useMyBorrowsPage();
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -128,7 +116,7 @@ export function MyBorrowsPage() {
                   </div>
 
                   <button
-                    onClick={() => returnBook(record.book.id)}
+                    onClick={() => handleReturn(record.book.id)}
                     disabled={isReturning}
                     className="inline-flex items-center px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 disabled:opacity-50 transition-colors"
                   >

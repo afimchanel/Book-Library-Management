@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { bookService } from '@/services/book.service';
 import type { BookDetail, CreateBookRequest } from '@/types/api.types';
 import { useState } from 'react';
+import { BOOKS_QUERY_KEYS } from '../constants';
 
 // Match backend CreateBookDto validation
 const bookSchema = z.object({
@@ -55,7 +56,7 @@ export function useBookForm({ book, onSuccess }: UseBookFormOptions = {}) {
   const createMutation = useMutation({
     mutationFn: (data: CreateBookRequest) => bookService.create(data),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['books'] });
+      queryClient.invalidateQueries({ queryKey: BOOKS_QUERY_KEYS.all });
       onSuccess?.();
       navigate('/books');
     },
@@ -68,7 +69,7 @@ export function useBookForm({ book, onSuccess }: UseBookFormOptions = {}) {
     mutationFn: ({ id, data }: { id: string; data: Partial<BookFormData> }) =>
       bookService.update(id, data),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['books'] });
+      queryClient.invalidateQueries({ queryKey: BOOKS_QUERY_KEYS.all });
       onSuccess?.();
       navigate('/books');
     },

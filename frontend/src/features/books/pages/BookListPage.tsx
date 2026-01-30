@@ -1,39 +1,28 @@
-import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Search, Plus, BookOpen, Loader2, Trash2, Edit, BookMarked } from 'lucide-react';
-import { useBooks, useSearchBooks, useDeleteBook, useBorrowBook } from '../hooks';
+import { useBookListPage } from '../hooks';
 import { useAuthStore } from '@/stores/auth.store';
-import { cn, useDebounce } from '@/lib';
+import { cn } from '@/lib';
 import type { BookListItem } from '@/types/api.types';
 
 export function BookListPage() {
-  const [searchInput, setSearchInput] = useState('');
-  const [page, setPage] = useState(1);
-  const limit = 10;
-
-  // Debounce search input (300ms delay)
-  const debouncedSearch = useDebounce(searchInput, 300);
-
   const { user } = useAuthStore();
-  const isSearching = debouncedSearch.length >= 2;
-
-  const booksQuery = useBooks({ page, limit });
-  const searchBooksQuery = useSearchBooks(debouncedSearch, { page, limit });
-
-  const { deleteBook, isDeleting } = useDeleteBook();
-  const { borrowBook, isBorrowing } = useBorrowBook();
-
-  const activeQuery = isSearching ? searchBooksQuery : booksQuery;
-  const { data, isLoading, error } = activeQuery;
-
-  const books = data?.data || [];
-  const totalPages = data?.pagination?.totalPages || 1;
-
-  const handleDelete = (id: string) => {
-    if (window.confirm('Are you sure you want to delete this book?')) {
-      deleteBook(id);
-    }
-  };
+  const {
+    searchInput,
+    debouncedSearch,
+    isSearching,
+    handleSearch,
+    page,
+    setPage,
+    totalPages,
+    books,
+    isLoading,
+    error,
+    handleDelete,
+    handleBorrow,
+    isDeleting,
+    isBorrowing,
+  } = useBookListPage();
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -65,10 +54,7 @@ export function BookListPage() {
         <input
           type="text"
           value={searchInput}
-          onChange={(e) => {
-            setSearchInput(e.target.value);
-            setPage(1);
-          }}
+          onChange={(e) => handleSearch(e.target.value)}
           placeholder="Search by title, author, or ISBN..."
           className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
         />
@@ -170,7 +156,7 @@ export function BookListPage() {
                 <div className="flex flex-wrap gap-2">
                   {user && book.availableQuantity > 0 && (
                     <button
-                      onClick={() => borrowBook(book.id)}
+                      onClick={() => handleBorrow(book.id)}
                       disabled={isBorrowing}
                       className="inline-flex items-center px-3 py-1.5 text-sm bg-blue-600 text-white rounded hover:bg-blue-700 disabled:opacity-50"
                     >

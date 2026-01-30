@@ -1,6 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { bookService } from '@/services/book.service';
 import { useState } from 'react';
+import { BOOKS_QUERY_KEYS } from '../constants';
 
 export function useBorrowBook() {
   const queryClient = useQueryClient();
@@ -9,8 +10,8 @@ export function useBorrowBook() {
   const borrowMutation = useMutation({
     mutationFn: bookService.borrow,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['books'] });
-      queryClient.invalidateQueries({ queryKey: ['userBorrowedBooks'] });
+      queryClient.invalidateQueries({ queryKey: BOOKS_QUERY_KEYS.all });
+      queryClient.invalidateQueries({ queryKey: BOOKS_QUERY_KEYS.userBorrowed });
     },
     onError: (err: Error) => {
       setError(err.message || 'Failed to borrow book');
@@ -20,8 +21,8 @@ export function useBorrowBook() {
   const returnMutation = useMutation({
     mutationFn: bookService.return,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['books'] });
-      queryClient.invalidateQueries({ queryKey: ['userBorrowedBooks'] });
+      queryClient.invalidateQueries({ queryKey: BOOKS_QUERY_KEYS.all });
+      queryClient.invalidateQueries({ queryKey: BOOKS_QUERY_KEYS.userBorrowed });
     },
     onError: (err: Error) => {
       setError(err.message || 'Failed to return book');

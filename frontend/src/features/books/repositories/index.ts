@@ -1,0 +1,1 @@
+export { bookRepository } from './bookRepository';

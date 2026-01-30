@@ -165,14 +165,3 @@ export class ErrorsResponse {
   @ApiProperty({ type: ErrorsTypeDto })
   error?: ErrorsTypeDto; // will have errors?
 }
-
-export class CountRowResponse {
-  @ApiProperty()
-  totalRows: number;
-}
-
-export class CreateRowResponse {
-  @ApiProperty()
-  @Expose()
-  uuid: string;
-}

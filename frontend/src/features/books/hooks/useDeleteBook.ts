@@ -1,6 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { bookService } from '@/services/book.service';
 import { useState } from 'react';
+import { BOOKS_QUERY_KEYS } from '../constants';
 
 export function useDeleteBook() {
   const queryClient = useQueryClient();
@@ -9,7 +10,7 @@ export function useDeleteBook() {
   const mutation = useMutation({
     mutationFn: bookService.delete,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['books'] });
+      queryClient.invalidateQueries({ queryKey: BOOKS_QUERY_KEYS.all });
     },
     onError: (err: Error) => {
       setError(err.message || 'Failed to delete book');
