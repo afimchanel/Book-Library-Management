@@ -1,13 +1,22 @@
 import { Link, useParams } from 'react-router-dom';
 import { ArrowLeft, Loader2 } from 'lucide-react';
-import { useBookForm, useBook } from '../hooks';
+import { useBookFormPage } from '../hooks';
 import { CoverImageUpload } from '../components';
 
 export function BookFormPage() {
   const { id } = useParams<{ id: string }>();
-  const isEditing = !!id;
+  
+  const {
+    book,
+    isLoadingBook,
+    form,
+    onSubmit,
+    isLoading,
+    error,
+    isEditing,
+  } = useBookFormPage(id);
 
-  const { data: book, isLoading: isLoadingBook } = useBook(id || '');
+  const { register, formState: { errors } } = form;
   
   // Only render form when we have the book data (for edit mode)
   if (isEditing && isLoadingBook) {
@@ -17,13 +26,6 @@ export function BookFormPage() {
       </div>
     );
   }
-
-  return <BookForm book={book} bookId={id} />;
-}
-
-function BookForm({ book, bookId }: { book?: ReturnType<typeof useBook>['data']; bookId?: string }) {
-  const { form, onSubmit, isLoading, error, isEditing } = useBookForm({ book: book || undefined });
-  const { register, formState: { errors } } = form;
 
   return (
     <div className="container mx-auto px-4 py-8 max-w-2xl">
@@ -143,9 +145,9 @@ function BookForm({ book, bookId }: { book?: ReturnType<typeof useBook>['data'];
           </div>
 
           {/* Cover Image Upload - only show when editing */}
-          {isEditing && bookId && (
+          {isEditing && id && (
             <CoverImageUpload
-              bookId={bookId}
+              bookId={id}
               currentCoverUrl={book?.coverImage}
             />
           )}

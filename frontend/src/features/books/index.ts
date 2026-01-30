@@ -3,6 +3,7 @@ export {
   useBookListPage,
   useBookDetailPage,
   useMyBorrowsPage,
+  useBookFormPage,
   useBookForm,
   useCoverImageUpload,
 } from './hooks';
