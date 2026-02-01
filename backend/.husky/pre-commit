@@ -1,0 +1,33 @@
+#!/bin/sh
+
+echo "🔍 Running Backend pre-commit checks..."
+
+cd backend
+
+# 1. TypeScript compilation check
+echo "📘 TypeScript check..."
+npx tsc --noEmit || exit 1
+
+# 2. Run migrations (check if schema is up to date)
+echo "🗄️  Migration check..."
+npm run migration:run || exit 1
+
+# 3. Check if migration generated new files (fail if it did)
+echo "📋 Checking for uncommitted migration files..."
+MIGRATION_FILES=$(git status --porcelain src/database/migrations/ 2>/dev/null | grep "^??" || true)
+if [ -n "$MIGRATION_FILES" ]; then
+  echo "❌ Error: New migration files detected but not staged!"
+  echo "$MIGRATION_FILES"
+  echo "Please run 'npm run migration:generate' and commit the migration files."
+  exit 1
+fi
+
+# 4. Lint staged files (includes cspell)
+echo "✨ Lint & Spell check staged files..."
+npx lint-staged || exit 1
+
+# 5. Run tests
+echo "🧪 Running tests..."
+npm run test -- --passWithNoTests || exit 1
+
+echo "✅ Backend pre-commit checks passed!"

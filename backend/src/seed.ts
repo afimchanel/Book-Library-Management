@@ -32,15 +32,15 @@ async function bootstrap() {
           ...userData,
           role: userData.username === 'admin' ? 'admin' : 'user',
         });
-        logger.log(`✅ Created user: ${userData.username}`);
+        logger.log(`Ã¢Å“â€¦ Created user: ${userData.username}`);
       } else {
-        logger.log(`⏭️  User already exists: ${userData.username}`);
+        logger.log(`Ã¢ÂÂ­Ã¯Â¸Â  User already exists: ${userData.username}`);
       }
     }
 
-    logger.log('🌱 Seed completed successfully');
+    logger.log('Ã°Å¸Å’Â± Seed completed successfully');
   } catch (error) {
-    logger.error('❌ Seed failed:', error);
+    logger.error('Ã¢ÂÅ’ Seed failed:', error);
   } finally {
     await app.close();
   }

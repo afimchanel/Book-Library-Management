@@ -44,7 +44,7 @@ export class GlobalExceptionFilter implements ExceptionFilter {
     } else if (exception instanceof Error) {
       message = exception.message;
       error = exception.name;
-      
+
       // Log unexpected errors
       this.logger.error(
         `Unexpected error: ${exception.message}`,

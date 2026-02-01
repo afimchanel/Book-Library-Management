@@ -20,6 +20,14 @@ module.exports = {
     '@typescript-eslint/interface-name-prefix': 'off',
     '@typescript-eslint/explicit-function-return-type': 'off',
     '@typescript-eslint/explicit-module-boundary-types': 'off',
-    '@typescript-eslint/no-explicit-any': 'off',
+    // Block 'any' type - must use proper types
+    '@typescript-eslint/no-explicit-any': 'error',
+    // Block console.log in production code
+    'no-console': [
+      'error',
+      {
+        allow: ['warn', 'error', 'info'],
+      },
+    ],
   },
 };

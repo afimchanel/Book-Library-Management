@@ -1,9 +1,13 @@
 import { Injectable } from '@nestjs/common';
-import { EntityManager, In, Repository, SelectQueryBuilder } from 'typeorm';
-import { BorrowRecordEntity, BorrowStatus } from '../entities/borrow-record.entity';
+import { EntityManager, In, SelectQueryBuilder } from 'typeorm';
+import {
+  BorrowRecordEntity,
+  BorrowStatus,
+} from '../entities/borrow-record.entity';
+import { BaseRepository } from './base.repository';
 
 @Injectable()
-export class BorrowRecordRepository extends Repository<BorrowRecordEntity> {
+export class BorrowRecordRepository extends BaseRepository<BorrowRecordEntity> {
   private alias = 'borrowRecord';
 
   constructor(protected entityManager: EntityManager) {

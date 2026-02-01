@@ -1,13 +1,9 @@
-import { useState } from 'react';
-import { bookRepository } from '../repositories';
-import { useDebounce } from '@/lib/hooks';
+import { useState } from "react";
+import { bookRepository } from "../repositories";
+import { useDebounce } from "@/lib/hooks";
 
-/**
- * Hook สำหรับ BookListPage
- * รวม logic ของ search, pagination, delete, borrow
- */
 export function useBookListPage() {
-  const [searchInput, setSearchInput] = useState('');
+  const [searchInput, setSearchInput] = useState("");
   const [page, setPage] = useState(1);
   const limit = 10;
 
@@ -16,7 +12,10 @@ export function useBookListPage() {
 
   // Queries
   const booksQuery = bookRepository.useList({ page, limit });
-  const searchBooksQuery = bookRepository.useSearch(debouncedSearch, { page, limit });
+  const searchBooksQuery = bookRepository.useSearch(debouncedSearch, {
+    page,
+    limit,
+  });
 
   // Mutations
   const deleteMutation = bookRepository.useDelete();
@@ -34,7 +33,7 @@ export function useBookListPage() {
   };
 
   const handleDelete = (id: string) => {
-    if (window.confirm('Are you sure you want to delete this book?')) {
+    if (window.confirm("Are you sure you want to delete this book?")) {
       deleteMutation.mutate(id);
     }
   };

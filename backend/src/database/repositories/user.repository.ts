@@ -1,12 +1,13 @@
 import { Injectable } from '@nestjs/common';
-import { EntityManager, Repository, SelectQueryBuilder } from 'typeorm';
+import { EntityManager, SelectQueryBuilder } from 'typeorm';
 import { UserEntity } from '../entities';
 import { UserProfileDto } from 'src/users/dto/user.dto';
 import { toUserProfileDto } from 'src/users/mappers/user.mapper';
 import { ICreateUserData, IUpdateUserData } from 'src/users/users.interface';
+import { BaseRepository } from './base.repository';
 
 @Injectable()
-export class UserRepository extends Repository<UserEntity> {
+export class UserRepository extends BaseRepository<UserEntity> {
   private alias = 'user';
 
   constructor(protected entityManager: EntityManager) {

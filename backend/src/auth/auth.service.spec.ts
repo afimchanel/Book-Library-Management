@@ -6,8 +6,6 @@ import { UsersService } from '../users/users.service';
 
 describe('AuthService', () => {
   let service: AuthService;
-  let usersService: UsersService;
-  let jwtService: JwtService;
 
   const mockUser = {
     id: '123e4567-e89b-12d3-a456-426614174000',
@@ -47,8 +45,6 @@ describe('AuthService', () => {
     }).compile();
 
     service = module.get<AuthService>(AuthService);
-    usersService = module.get<UsersService>(UsersService);
-    jwtService = module.get<JwtService>(JwtService);
 
     jest.clearAllMocks();
   });
@@ -96,22 +92,31 @@ describe('AuthService', () => {
 
       const result = await service.login(loginDto);
 
-      expect(mockUsersService.findByUsername).toHaveBeenCalledWith(loginDto.username);
-      expect(mockUsersService.validatePassword).toHaveBeenCalledWith(mockUser, loginDto.password);
+      expect(mockUsersService.findByUsername).toHaveBeenCalledWith(
+        loginDto.username,
+      );
+      expect(mockUsersService.validatePassword).toHaveBeenCalledWith(
+        mockUser,
+        loginDto.password,
+      );
       expect(result.data.accessToken).toBe('mock-jwt-token');
     });
 
     it('should throw UnauthorizedException for invalid username', async () => {
       mockUsersService.findByUsername.mockResolvedValue(null);
 
-      await expect(service.login(loginDto)).rejects.toThrow(UnauthorizedException);
+      await expect(service.login(loginDto)).rejects.toThrow(
+        UnauthorizedException,
+      );
     });
 
     it('should throw UnauthorizedException for invalid password', async () => {
       mockUsersService.findByUsername.mockResolvedValue(mockUser);
       mockUsersService.validatePassword.mockResolvedValue(false);
 
-      await expect(service.login(loginDto)).rejects.toThrow(UnauthorizedException);
+      await expect(service.login(loginDto)).rejects.toThrow(
+        UnauthorizedException,
+      );
     });
 
     it('should throw UnauthorizedException for inactive user', async () => {
@@ -119,7 +124,9 @@ describe('AuthService', () => {
       mockUsersService.findByUsername.mockResolvedValue(inactiveUser);
       mockUsersService.validatePassword.mockResolvedValue(true);
 
-      await expect(service.login(loginDto)).rejects.toThrow(UnauthorizedException);
+      await expect(service.login(loginDto)).rejects.toThrow(
+        UnauthorizedException,
+      );
     });
   });
 
@@ -131,14 +138,22 @@ describe('AuthService', () => {
 
       const result = await service.validateUser(payload);
 
-      expect(result).toEqual(mockUser);
+      expect(result).toEqual({
+        id: mockUser.id,
+        username: mockUser.username,
+        email: mockUser.email,
+        role: undefined,
+        isActive: mockUser.isActive,
+      });
     });
 
     it('should throw UnauthorizedException for inactive user', async () => {
       const inactiveUser = { ...mockUser, isActive: false };
       mockUsersService.findById.mockResolvedValue(inactiveUser);
 
-      await expect(service.validateUser(payload)).rejects.toThrow(UnauthorizedException);
+      await expect(service.validateUser(payload)).rejects.toThrow(
+        UnauthorizedException,
+      );
     });
   });
 });

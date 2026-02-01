@@ -1,12 +1,4 @@
-import {
-  Entity,
-  Column,
-  Index,
-  VersionColumn,
-  DeleteDateColumn,
-} from 'typeorm';
-import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { BaseEntity } from '../../common/entities/base.entity';
+import { Entity, Column, Index, VersionColumn } from 'typeorm';
 import { SoftDeleteEntity } from 'src/common/entities/soft-delete.entity';
 
 @Entity('books')

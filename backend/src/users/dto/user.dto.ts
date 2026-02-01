@@ -2,7 +2,6 @@ import { ApiProperty, OmitType, PickType } from '@nestjs/swagger';
 import { UserRole } from 'src/common/constant/library.constant';
 import { ResultResponse } from 'src/helper/result-response.helper';
 
-
 export class UserDto {
   @ApiProperty({ example: '550e8400-e29b-41d4-a716-446655440000' })
   id: string;

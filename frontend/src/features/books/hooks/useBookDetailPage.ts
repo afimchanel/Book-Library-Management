@@ -1,10 +1,6 @@
-import { useNavigate } from 'react-router-dom';
-import { bookRepository } from '../repositories';
+import { useNavigate } from "react-router-dom";
+import { bookRepository } from "../repositories";
 
-/**
- * Hook สำหรับ BookDetailPage
- * รวม logic ของ fetch book detail, delete, borrow
- */
 export function useBookDetailPage(bookId: string) {
   const navigate = useNavigate();
 
@@ -16,9 +12,9 @@ export function useBookDetailPage(bookId: string) {
   const borrowMutation = bookRepository.useBorrow();
 
   const handleDelete = () => {
-    if (window.confirm('Are you sure you want to delete this book?')) {
+    if (window.confirm("Are you sure you want to delete this book?")) {
       deleteMutation.mutate(bookId, {
-        onSuccess: () => navigate('/books'),
+        onSuccess: () => navigate("/books"),
       });
     }
   };

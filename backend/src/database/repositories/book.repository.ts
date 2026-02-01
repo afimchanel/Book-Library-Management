@@ -1,6 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { EntityManager, Repository, SelectQueryBuilder } from 'typeorm';
+import { EntityManager, SelectQueryBuilder } from 'typeorm';
 import { BookEntity } from '../entities';
 import { SearchBookDto } from '../../books/dto/search-book.dto';
 import { BookDetailDto, BookListItemDto } from '../../books/dto/book.dto';
@@ -9,6 +8,7 @@ import {
   toBookListItemDtoList,
 } from '../../books/mappers/book.mapper';
 import { ICreateBookData, IUpdateBookData } from '../../books/books.interface';
+import { BaseRepository } from './base.repository';
 
 export type BookOperationResult =
   | { success: true; book: BookEntity }
@@ -18,7 +18,7 @@ export type BookDtoOperationResult =
   | { success: false; error: string };
 
 @Injectable()
-export class BookRepository extends Repository<BookEntity> {
+export class BookRepository extends BaseRepository<BookEntity> {
   private alias = 'book';
 
   constructor(protected entityManager: EntityManager) {

@@ -3,7 +3,6 @@ import { BaseEntity } from '../../common/entities/base.entity';
 import { Exclude } from 'class-transformer';
 import { UserRole } from 'src/common/constant/library.constant';
 
-
 @Entity('users')
 export class UserEntity extends BaseEntity {
   @Index({ unique: true })

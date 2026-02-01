@@ -1,18 +1,14 @@
-import { bookRepository } from '../repositories';
-import { useBookForm } from './useBookForm';
+import { bookRepository } from "../repositories";
+import { useBookForm } from "./useBookForm";
 
-/**
- * Hook สำหรับ BookFormPage
- * รวม logic ของ fetch book (สำหรับ edit mode) และ form
- */
 export function useBookFormPage(bookId?: string) {
   const isEditing = !!bookId;
 
   // Fetch book data when editing
-  const bookQuery = bookRepository.useDetail(bookId || '');
+  const bookQuery = bookRepository.useDetail(bookId || "");
 
   // Form logic
-  const formHook = useBookForm({ 
+  const formHook = useBookForm({
     book: bookQuery.data,
   });
 
@@ -24,7 +20,7 @@ export function useBookFormPage(bookId?: string) {
 
     // Form
     ...formHook,
-    
+
     // State
     isEditing,
   };
