@@ -1,5 +1,10 @@
 import { Controller, Get } from '@nestjs/common';
-import { HealthCheck, HealthCheckService, MemoryHealthIndicator, DiskHealthIndicator } from '@nestjs/terminus';
+import {
+  HealthCheck,
+  HealthCheckService,
+  MemoryHealthIndicator,
+  DiskHealthIndicator,
+} from '@nestjs/terminus';
 import { TypeOrmHealthIndicator } from './indicators/typeorm.health';
 
 @Controller('health')
@@ -19,13 +24,14 @@ export class HealthController {
       () => this.db.isHealthy('database'),
       // Memory heap check (max 300MB)
       () => this.memory.checkHeap('memory_heap', 300 * 1024 * 1024),
-      // Memory RSS check (max 500MB)  
+      // Memory RSS check (max 500MB)
       () => this.memory.checkRSS('memory_rss', 500 * 1024 * 1024),
       // Disk check (max 90% usage)
-      () => this.disk.checkStorage('disk', { 
-        path: process.platform === 'win32' ? 'C:\\' : '/',
-        thresholdPercent: 0.9,
-      }),
+      () =>
+        this.disk.checkStorage('disk', {
+          path: process.platform === 'win32' ? 'C:\\' : '/',
+          thresholdPercent: 0.9,
+        }),
     ]);
   }
 
@@ -38,8 +44,6 @@ export class HealthController {
   @Get('ready')
   @HealthCheck()
   readiness() {
-    return this.health.check([
-      () => this.db.isHealthy('database'),
-    ]);
+    return this.health.check([() => this.db.isHealthy('database')]);
   }
 }

@@ -14,48 +14,46 @@ A NestJS backend API for managing a book library system with authentication, CRU
 
 ## Architecture & Design Principles
 
-
-
 ### Project Structure
 
 ```
 src/
-├── auth/                    # Authentication module
-│   ├── dto/                # Data Transfer Objects
-│   ├── guards/             # JWT Auth guards
-│   ├── strategies/         # Passport JWT strategy
-│   ├── auth.controller.ts
-│   ├── auth.module.ts
-│   ├── auth.service.ts
-│   └── auth.service.spec.ts  # Unit tests
-├── books/                   # Books module
-│   ├── dto/                # Book, BorrowRecord DTOs
-│   ├── mappers/            # Entity to DTO mappers
-│   ├── books.controller.ts
-│   ├── books.module.ts
-│   ├── books.service.ts
-│   ├── books.service.spec.ts # Unit tests
-│   └── books.interface.ts
-├── users/                   # Users module
-│   ├── dto/
-│   ├── mappers/            # User entity to DTO mappers
-│   ├── users.module.ts
-│   └── users.service.ts
-├── database/                # Database layer
-│   ├── entities/           # TypeORM entities
-│   ├── repositories/       # Custom repositories
-│   └── migrations/         # Database migrations
-├── common/                  # Shared utilities
-│   ├── constant/           # Constants (UserRole, DueDate, etc.)
-│   ├── dto/                # Pagination DTO
-│   ├── entities/           # Base entity classes
-│   ├── filters/            # Exception filters
-│   └── middleware/         # Request logger
-├── helper/                  # Helper functions
-├── testing/                 # Test utilities
-│   └── mocks/              # Reusable mock factories
-├── config/                  # Configuration
-└── main.ts                 # Application entry point
+â”œâ”€â”€ auth/                    # Authentication module
+â”‚   â”œâ”€â”€ dto/                # Data Transfer Objects
+â”‚   â”œâ”€â”€ guards/             # JWT Auth guards
+â”‚   â”œâ”€â”€ strategies/         # Passport JWT strategy
+â”‚   â”œâ”€â”€ auth.controller.ts
+â”‚   â”œâ”€â”€ auth.module.ts
+â”‚   â”œâ”€â”€ auth.service.ts
+â”‚   â””â”€â”€ auth.service.spec.ts  # Unit tests
+â”œâ”€â”€ books/                   # Books module
+â”‚   â”œâ”€â”€ dto/                # Book, BorrowRecord DTOs
+â”‚   â”œâ”€â”€ mappers/            # Entity to DTO mappers
+â”‚   â”œâ”€â”€ books.controller.ts
+â”‚   â”œâ”€â”€ books.module.ts
+â”‚   â”œâ”€â”€ books.service.ts
+â”‚   â”œâ”€â”€ books.service.spec.ts # Unit tests
+â”‚   â””â”€â”€ books.interface.ts
+â”œâ”€â”€ users/                   # Users module
+â”‚   â”œâ”€â”€ dto/
+â”‚   â”œâ”€â”€ mappers/            # User entity to DTO mappers
+â”‚   â”œâ”€â”€ users.module.ts
+â”‚   â””â”€â”€ users.service.ts
+â”œâ”€â”€ database/                # Database layer
+â”‚   â”œâ”€â”€ entities/           # TypeORM entities
+â”‚   â”œâ”€â”€ repositories/       # Custom repositories
+â”‚   â””â”€â”€ migrations/         # Database migrations
+â”œâ”€â”€ common/                  # Shared utilities
+â”‚   â”œâ”€â”€ constant/           # Constants (UserRole, DueDate, etc.)
+â”‚   â”œâ”€â”€ dto/                # Pagination DTO
+â”‚   â”œâ”€â”€ entities/           # Base entity classes
+â”‚   â”œâ”€â”€ filters/            # Exception filters
+â”‚   â””â”€â”€ middleware/         # Request logger
+â”œâ”€â”€ helper/                  # Helper functions
+â”œâ”€â”€ testing/                 # Test utilities
+â”‚   â””â”€â”€ mocks/              # Reusable mock factories
+â”œâ”€â”€ config/                  # Configuration
+â””â”€â”€ main.ts                 # Application entry point
 ```
 
 ## Design Patterns
@@ -122,7 +120,7 @@ npm run start:prod
 
 The API will be available at `http://localhost:3000/api`
 
-## 🌱 Database Seeding
+## ðŸŒ± Database Seeding
 
 To populate the database with default test users:
 
@@ -132,6 +130,7 @@ npm run seed
 ```
 
 This script:
+
 - Creates admin user with admin role
 - Creates test user with user role
 - Skips if users already exist
@@ -141,23 +140,23 @@ This script:
 
 ### Authentication
 
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| POST | `/api/auth/register` | Register a new user |
-| POST | `/api/auth/login` | Login and get JWT token |
+| Method | Endpoint             | Description             |
+| ------ | -------------------- | ----------------------- |
+| POST   | `/api/auth/register` | Register a new user     |
+| POST   | `/api/auth/login`    | Login and get JWT token |
 
 ### Books (Protected - requires JWT)
 
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| GET | `/api/books` | Get all books (with pagination & search) |
-| GET | `/api/books/:id` | Get a specific book |
-| POST | `/api/books` | Create a new book |
-| PATCH | `/api/books/:id` | Update a book |
-| DELETE | `/api/books/:id` | Delete a book |
-| POST | `/api/books/:id/cover` | Upload book cover image |
-| POST | `/api/books/:id/borrow` | Borrow a book |
-| POST | `/api/books/:id/return` | Return a book |
+| Method | Endpoint                | Description                              |
+| ------ | ----------------------- | ---------------------------------------- |
+| GET    | `/api/books`            | Get all books (with pagination & search) |
+| GET    | `/api/books/:id`        | Get a specific book                      |
+| POST   | `/api/books`            | Create a new book                        |
+| PATCH  | `/api/books/:id`        | Update a book                            |
+| DELETE | `/api/books/:id`        | Delete a book                            |
+| POST   | `/api/books/:id/cover`  | Upload book cover image                  |
+| POST   | `/api/books/:id/borrow` | Borrow a book                            |
+| POST   | `/api/books/:id/return` | Return a book                            |
 
 ### Query Parameters for GET /api/books
 
@@ -272,24 +271,24 @@ Given the time constraints (3-4 hours), here are some trade-offs made:
 
 ### What's Already Implemented:
 
-- ✅ Full CRUD for books with validation
-- ✅ User authentication (register/login) with JWT
-- ✅ Book borrowing/returning with quantity management
-- ✅ BorrowRecord entity tracking who borrowed what and when
-- ✅ User roles (admin/user)
-- ✅ Soft delete for books
-- ✅ Cover image upload
-- ✅ Search by title, author, ISBN
-- ✅ Pagination support
-- ✅ Swagger API documentation (`/api/docs`)
-- ✅ Unit tests for business logic (AAA pattern)
-- ✅ Global exception filter
-- ✅ Request logging middleware
+- âœ… Full CRUD for books with validation
+- âœ… User authentication (register/login) with JWT
+- âœ… Book borrowing/returning with quantity management
+- âœ… BorrowRecord entity tracking who borrowed what and when
+- âœ… User roles (admin/user)
+- âœ… Soft delete for books
+- âœ… Cover image upload
+- âœ… Search by title, author, ISBN
+- âœ… Pagination support
+- âœ… Swagger API documentation (`/api/docs`)
+- âœ… Unit tests for business logic (AAA pattern)
+- âœ… Global exception filter
+- âœ… Request logging middleware
 
 ### Suggested Improvements with More Time:
 
 - [ ] Add E2E tests with test database
-- [ ] Implement refresh token mechanism  
+- [ ] Implement refresh token mechanism
 - [ ] Migrate to cloud storage for images
 - [ ] Add Redis for caching frequently accessed books
 - [ ] Implement book categories/tags

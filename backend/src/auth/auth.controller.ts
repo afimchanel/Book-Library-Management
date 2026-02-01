@@ -2,8 +2,16 @@ import { Controller, Post, Body, HttpCode, HttpStatus } from '@nestjs/common';
 import { ApiTags, ApiOperation } from '@nestjs/swagger';
 import { Throttle } from '@nestjs/throttler';
 import { AuthService } from './auth.service';
-import { LoginDto, RegisterDto, LoginDtoResponse, RegisterDtoResponse } from './dto/auth.dto';
-import { ApiCreatedResponse, ApiReadResponses } from 'src/common/decorators/api-responses.decorator';
+import {
+  LoginDto,
+  RegisterDto,
+  LoginDtoResponse,
+  RegisterDtoResponse,
+} from './dto/auth.dto';
+import {
+  ApiCreatedResponse,
+  ApiReadResponses,
+} from 'src/common/decorators/api-responses.decorator';
 import { ApiResponseExamples } from 'src/common/examples/api-response.examples';
 
 @ApiTags('Auth')

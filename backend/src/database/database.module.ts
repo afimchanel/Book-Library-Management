@@ -11,7 +11,6 @@ export interface DatabaseModuleOptions {
   skipRepository: boolean;
 }
 
-
 @Global()
 @Module({})
 export class DatabaseModule {
@@ -31,7 +30,7 @@ export class DatabaseModule {
       module: DatabaseModule,
       imports: [
         TypeOrmModule.forRoot(databaseConfig()),
-        TypeOrmModule.forFeature([BookEntity, UserEntity, BorrowRecordEntity])
+        TypeOrmModule.forFeature([BookEntity, UserEntity, BorrowRecordEntity]),
       ],
       providers: [...allRepositories],
       exports: [TypeOrmModule, ...allRepositories],

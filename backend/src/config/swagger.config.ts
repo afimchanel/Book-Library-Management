@@ -4,7 +4,8 @@ import { INestApplication } from '@nestjs/common';
 export function setupSwagger(app: INestApplication): void {
   const config = new DocumentBuilder()
     .setTitle('Book Library Management API')
-    .setDescription(`
+    .setDescription(
+      `
 ## Overview
 A comprehensive API for managing a book library system.
 
@@ -20,7 +21,8 @@ All book endpoints require a valid JWT token. Include it in the Authorization he
 \`\`\`
 Authorization: Bearer <your_token>
 \`\`\`
-    `)
+    `,
+    )
     .setVersion('1.0')
     .addBearerAuth(
       {

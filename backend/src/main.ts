@@ -1,5 +1,6 @@
 import { NestFactory } from '@nestjs/core';
 import { ValidationPipe, Logger } from '@nestjs/common';
+import { NestExpressApplication } from '@nestjs/platform-express';
 import helmet from 'helmet';
 import { AppModule } from './app.module';
 import { existsSync, mkdirSync } from 'fs';
@@ -16,19 +17,21 @@ async function bootstrap() {
     mkdirSync(uploadsDir, { recursive: true });
   }
 
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create<NestExpressApplication>(AppModule);
 
   // Security: Helmet for HTTP headers
-  app.use(helmet({
-    crossOriginEmbedderPolicy: false,
-    contentSecurityPolicy: {
-      directives: {
-        imgSrc: [`'self'`, 'data:', 'blob:', 'https:'],
-        scriptSrc: [`'self'`, `'unsafe-inline'`],
+  app.use(
+    helmet({
+      crossOriginEmbedderPolicy: false,
+      contentSecurityPolicy: {
+        directives: {
+          imgSrc: [`'self'`, 'data:', 'blob:', 'https:'],
+          scriptSrc: [`'self'`, `'unsafe-inline'`],
+        },
       },
-    },
-  }));
-  
+    }),
+  );
+
   // Enable CORS for frontend
   app.enableCors({
     origin: process.env.FRONTEND_URL || 'http://localhost:5173',
@@ -39,7 +42,9 @@ async function bootstrap() {
 
   // Serve static files for book covers
   const uploadsPath = join(__dirname, '..', 'uploads');
-  app.use('/uploads', require('express').static(uploadsPath));
+  app.useStaticAssets(uploadsPath, {
+    prefix: '/uploads/',
+  });
 
   // Global prefix (exclude health endpoints)
   app.setGlobalPrefix('api', {
@@ -66,9 +71,9 @@ async function bootstrap() {
 
   const port = process.env.PORT || 3000;
   await app.listen(port);
-  
-  logger.log(`🚀 Application is running on: http://localhost:${port}/api`);
-  logger.log(`📚 Swagger docs available at: http://localhost:${port}/api/docs`);
-  logger.log(`❤️ Health check at: http://localhost:${port}/health`);
+
+  logger.log(` Application is running on: http://localhost:${port}/api`);
+  logger.log(` Swagger docs available at: http://localhost:${port}/api/docs`);
+  logger.log(` Health check at: http://localhost:${port}/health`);
 }
 bootstrap();

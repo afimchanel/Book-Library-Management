@@ -1,0 +1,101 @@
+{
+  "version": "0.2",
+  "language": "en",
+  "words": [
+    "axios",
+    "clsx",
+    "dayjs",
+    "hookform",
+    "lucide",
+    "tanstack",
+    "tailwindcss",
+    "zustand",
+    "vite",
+    "vitejs",
+    "signin",
+    "signup",
+    "logout",
+    "authed",
+    "unauthorize",
+    "unauthenticated",
+    "fullname",
+    "navbar",
+    "dropdown",
+    "popover",
+    "tooltip",
+    "checkbox",
+    "datetime",
+    "readonly",
+    "slugify",
+    "debounce",
+    "focusable",
+    "rerender",
+    "unmount",
+    "preload",
+    "prefetch",
+    "refetch",
+    "middlewares",
+    "pathname",
+    "searchparams",
+    "URLSearchParams",
+    "ILIKE",
+    "tsconfig",
+    "postcss",
+    "autoprefixer",
+    "minifier",
+    "transpile",
+    "sourcemap",
+    "codebase",
+    "monorepo"
+  ],
+  "ignoreWords": [
+    "esbenp",
+    "dbaeumer",
+    "dotenv"
+  ],
+  "patterns": [
+    {
+      "name": "UUID",
+      "pattern": "/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/gi"
+    },
+    {
+      "name": "Email",
+      "pattern": "/[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}/g"
+    },
+    {
+      "name": "Hex Colors",
+      "pattern": "/#[0-9a-fA-F]{3,8}/g"
+    },
+    {
+      "name": "Tailwind Classes",
+      "pattern": "/(?:^|\\s)(?:hover|focus|active|disabled|dark|sm|md|lg|xl|2xl):[\\w-]+/g"
+    }
+  ],
+  "ignorePaths": [
+    "node_modules/**",
+    "dist/**",
+    "build/**",
+    "coverage/**",
+    "*.min.js",
+    "*.map",
+    "package-lock.json",
+    "yarn.lock",
+    "pnpm-lock.yaml",
+    ".git/**",
+    ".vscode/**",
+    "*.log",
+    "public/**",
+    "*.jpg",
+    "*.jpeg",
+    "*.png",
+    "*.gif",
+    "*.svg",
+    "*.ico",
+    "*.pdf"
+  ],
+  "flagWords": [],
+  "caseSensitive": false,
+  "allowCompoundWords": true,
+  "dictionaries": ["typescript", "node", "npm", "html", "css", "fonts"],
+  "import": []
+}

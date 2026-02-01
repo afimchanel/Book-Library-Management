@@ -1,11 +1,6 @@
 import { useState, useRef, useCallback } from "react";
 import { bookRepository } from "../repositories";
 
-/**
- * Reusable hook สำหรับ upload รูป cover
- * ใช้ได้กับทุก component ที่ต้องการ upload cover image
- */
-
 interface UseCoverImageUploadOptions {
   bookId: string;
   currentCoverUrl?: string;
@@ -52,10 +47,10 @@ export function useCoverImageUpload({
         { bookId, file },
         {
           onSuccess: (book) => handleSuccess(book.coverImage || ""),
-        }
+        },
       );
     },
-    [bookId, uploadMutation]
+    [bookId, uploadMutation],
   );
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {

@@ -4,21 +4,22 @@ import { BookEntity } from '../../database/entities';
 // Mock Book Entity
 export const createMockBookEntity = (
   overrides: Partial<BookEntity> = {},
-): BookEntity => ({
-  id: 'book-uuid-123',
-  title: 'Test Book',
-  author: 'Test Author',
-  isbn: '1234567890123',
-  description: 'Test description',
-  publicationYear: 2024,
-  coverImage: null,
-  quantity: 5,
-  availableQuantity: 5,
-  createdAt: new Date('2024-01-01'),
-  updatedAt: new Date('2024-01-01'),
-  deletedAt: null,
-  ...overrides,
-}) as BookEntity;
+): BookEntity =>
+  ({
+    id: 'book-uuid-123',
+    title: 'Test Book',
+    author: 'Test Author',
+    isbn: '1234567890123',
+    description: 'Test description',
+    publicationYear: 2024,
+    coverImage: null,
+    quantity: 5,
+    availableQuantity: 5,
+    createdAt: new Date('2024-01-01'),
+    updatedAt: new Date('2024-01-01'),
+    deletedAt: null,
+    ...overrides,
+  }) as BookEntity;
 
 // Mock Book Detail DTO
 export const createMockBookDetailDto = (

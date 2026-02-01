@@ -24,3 +24,18 @@ export function toUserProfileDtoList(users: UserEntity[]): UserProfileDto[] {
 export function toUserPublicDtoList(users: UserEntity[]): UserPublicDto[] {
   return users.map(toUserPublicDto);
 }
+
+/**
+ * Map UserProfileDto to partial UserEntity for bulk operations
+ * Use with bulkUpsert, bulkInsert methods
+ */
+export function toUserEntity(
+  dto: Partial<UserProfileDto>,
+): Partial<UserEntity> {
+  return {
+    username: dto.username,
+    email: dto.email,
+    fullName: dto.fullName,
+    role: dto.role,
+  };
+}

@@ -1,10 +1,10 @@
-import { bookRepository } from '../repositories';
-import { formatDate, isOverdue, getDaysRemaining } from '@/lib/utils/date.utils';
+import { bookRepository } from "../repositories";
+import {
+  formatDate,
+  isOverdue,
+  getDaysRemaining,
+} from "@/lib/utils/date.utils";
 
-/**
- * Hook สำหรับ MyBorrowsPage
- * รวม logic ของ fetch borrowed books และ return
- */
 export function useMyBorrowsPage() {
   // Query
   const borrowsQuery = bookRepository.useUserBorrowedBooks();

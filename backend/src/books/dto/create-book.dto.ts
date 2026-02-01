@@ -23,7 +23,10 @@ export class CreateBookDto {
   @Length(1, 255)
   author: string;
 
-  @ApiProperty({ example: '9780743273565', description: 'ISBN (10 or 13 digits)' })
+  @ApiProperty({
+    example: '9780743273565',
+    description: 'ISBN (10 or 13 digits)',
+  })
   @IsString()
   @IsNotEmpty()
   @Matches(/^(?:\d{10}|\d{13})$/, {
@@ -37,13 +40,20 @@ export class CreateBookDto {
   @Max(new Date().getFullYear() + 1)
   publicationYear: number;
 
-  @ApiPropertyOptional({ example: 5, description: 'Number of copies', default: 1 })
+  @ApiPropertyOptional({
+    example: 5,
+    description: 'Number of copies',
+    default: 1,
+  })
   @IsInt()
   @Min(1)
   @IsOptional()
   quantity?: number = 1;
 
-  @ApiPropertyOptional({ example: 'A classic American novel...', description: 'Book description' })
+  @ApiPropertyOptional({
+    example: 'A classic American novel...',
+    description: 'Book description',
+  })
   @IsString()
   @IsOptional()
   description?: string;

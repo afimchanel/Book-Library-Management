@@ -1,0 +1,11 @@
+echo "🔍 Running Frontend pre-commit checks..."
+
+# TypeScript type checking
+echo "📘 TypeScript check..."
+cd frontend && npx tsc --noEmit || exit 1
+
+# Lint staged files
+echo "✨ Lint staged files..."
+npx lint-staged || exit 1
+
+echo "✅ Frontend pre-commit checks passed!"

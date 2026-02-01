@@ -21,15 +21,18 @@ import { databaseConfig } from './config/database.config';
       isGlobal: true,
       envFilePath: '.env',
     }),
-    ThrottlerModule.forRoot([{
-      name: 'default',
-      ttl: 60000, // 1 minute
-      limit: 100, // 100 requests
-    }, {
-      name: 'strict',
-      ttl: 60000,
-      limit: 10, // For sensitive endpoints like login
-    }]),
+    ThrottlerModule.forRoot([
+      {
+        name: 'default',
+        ttl: 60000, // 1 minute
+        limit: 100, // 100 requests
+      },
+      {
+        name: 'strict',
+        ttl: 60000,
+        limit: 10, // For sensitive endpoints like login
+      },
+    ]),
     TypeOrmModule.forRoot(databaseConfig()),
     DatabaseModule.forRoot(),
     ServeStaticModule.forRoot({

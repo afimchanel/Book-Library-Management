@@ -19,5 +19,16 @@ export default defineConfig([
       ecmaVersion: 2020,
       globals: globals.browser,
     },
+    rules: {
+      // Block 'any' type - must use proper types
+      '@typescript-eslint/no-explicit-any': 'error',
+      // Block console.log in production code
+      'no-console': [
+        'error',
+        {
+          allow: ['warn', 'error', 'info'],
+        },
+      ],
+    },
   },
 ])

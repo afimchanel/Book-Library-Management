@@ -1,8 +1,10 @@
-import { BorrowRecordEntity, BorrowStatus } from '../../database/entities/borrow-record.entity';
+import {
+  BorrowRecordEntity,
+  BorrowStatus,
+} from '../../database/entities/borrow-record.entity';
 import { BorrowRecordDetailDto } from '../../books/dto/borrow-record.dto';
 import { createMockBookEntity } from './book.mock';
 import { createMockUserEntity } from './user.mock';
-
 
 // Mock Borrow Record Entity
 export const createMockBorrowRecordEntity = (

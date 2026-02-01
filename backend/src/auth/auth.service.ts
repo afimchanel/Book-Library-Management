@@ -2,7 +2,6 @@ import { HttpStatus, Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { UsersService } from '../users/users.service';
 
-import { UserEntity } from '../database/entities';
 import { JwtPayload, AuthenticatedUser } from './auth.interface';
 import {
   AuthDtoResponse,
@@ -77,7 +76,7 @@ export class AuthService {
     if (!user?.id || !user.isActive) {
       throw new UnauthorizedException('User not found or inactive');
     }
-    
+
     // Return only necessary fields (not the full entity)
     return {
       id: user.id,

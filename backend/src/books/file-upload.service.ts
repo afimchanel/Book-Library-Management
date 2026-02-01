@@ -36,7 +36,10 @@ export class FileUploadService implements MulterOptionsFactory {
    * Get upload destination path from config or use default
    */
   private getUploadDestination(): string {
-    return this.configService.get<string>('UPLOAD_DESTINATION', './uploads/covers');
+    return this.configService.get<string>(
+      'UPLOAD_DESTINATION',
+      './uploads/covers',
+    );
   }
 
   /**
@@ -61,14 +64,16 @@ export class FileUploadService implements MulterOptionsFactory {
     callback: (error: Error | null, acceptFile: boolean) => void,
   ): void {
     const allowedImageTypes = /\.(jpg|jpeg|png|gif|webp)$/i;
-    
+
     if (!file.originalname.match(allowedImageTypes)) {
       return callback(
-        new BadRequestException('Only image files (jpg, jpeg, png, gif, webp) are allowed'),
-        false
+        new BadRequestException(
+          'Only image files (jpg, jpeg, png, gif, webp) are allowed',
+        ),
+        false,
       );
     }
-    
+
     callback(null, true);
   }
 
